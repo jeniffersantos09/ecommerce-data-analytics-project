@@ -1,4 +1,4 @@
-# bi-microsoft-end-to-end-ssis-ssas-ssrs
+# ecommerce-data-analytics-project
 
        FASE 1 — MODELAGEM DO SISTEMA OPERACIONAL (OLTP)  Objetivo da fase
 
