@@ -1,102 +1,90 @@
-# ecommerce-data-analytics-project
 
-       FASE 1 — MODELAGEM DO SISTEMA OPERACIONAL (OLTP)  Objetivo da fase
 
-Criar o banco transacional do e-commerce.
 
-Esse banco representa o sistema operacional da empresa, responsável pelas operações do dia a dia:
 
-vendas
-cadastro de clientes
-cadastro de produtos
-emissão de notas
-pagamentos
 
-O que foi desenvolvido
-Criação do banco OLTP
 
-Banco:
+# # E-commerce Business Intelligence Project
 
-COMERCIO
-Criação das tabelas operacionais
+Projeto completo de Business Intelligence desenvolvido para um cenário fictício de e-commerce, cobrindo todas as etapas do pipeline de dados: modelagem OLTP, ETL, área de Stage, Data Warehouse e análise com Power BI.
+
+
+## Features
+
+- Modelagem OLTP
+- Área Stage
+- ETL com SSIS
+- Tratamento de dados
+- Banco de erros
+- Data Warehouse
+- SCD Tipo 2
+- Carga incremental
+- Dashboards Power BI
+
+# fase 0 - DOCUMENTO DE REQUISITOS
+
+A documentação completa do projeto está disponível na pasta DOCUMENTACAO:
+
+
+# FASE 1 — MODELAGEM DO SISTEMA OPERACIONAL (OLTP) 
+
+## Objetivo da fase:
+
+Criar o banco transacional do e-commerce. Esse banco representa o sistema operacional da empresa, responsável pelas operações do dia a dia:
+
+vendas, cadastro de clientes, cadastro de produtos, emissão de notas pagamentos....
+
+O banco foi criado em modelo relacional normalizado para: 
+
+Evitar redundância, garantir integridade, melhorar manutenção.
+
+
+. Criação das tabelas operacionais
 
 Tabelas:
+- CLIENTE
+- ENDERECO
+- PRODUTO 
+- CATEGORIA 
+- FORNECEDOR 
+- VENDEDOR 
+- FORMA_PAGAMENTO
+- NOTA_FISCAL 
+- ITEM_NOTA
 
-CLIENTE
-ENDERECO
-PRODUTO
-CATEGORIA
-FORNECEDOR
-VENDEDOR
-FORMA_PAGAMENTO
-NOTA_FISCAL
-ITEM_NOTA
+Uso de: Primary Key (PK), Foreign Key (FK), Integridade referencial, Estrutura normalizada.
 
-Uso de:
-Primary Key (PK)
-Foreign Key (FK)
-Integridade referencial
-Estrutura normalizada
+Sistema focado em: Operações rápidas inserções atualizações transações Modelagem Relacional
 
-O banco foi criado em modelo relacional normalizado para:
+Uso de: Entidades, relacionamentos, cardinalidade, Normalização.
 
-evitar redundância
-garantir integridade
-melhorar manutenção
-Conceitos utilizados
-Banco OLTP
-
-(Online Transaction Processing)
-
-Sistema focado em:
-
-operações rápidas
-inserções
-atualizações
-transações
-Modelagem Relacional
-
-Uso de:
-
-entidades
-relacionamentos
-cardinalidade
-Normalização
-
-FASE 2 — CRIAÇÃO DA ÁREA STAGE
+## FASE 2 — CRIAÇÃO DA ÁREA STAGE
 
 A Stage funciona como área temporária de processamento ETL.
 
-Criação das tabelas STAGE
-
 Tabelas:
 
-ST_CLIENTE
-ST_PRODUTO
-ST_CATEGORIA
-ST_VENDEDOR
-ST_FORNECEDOR
-ST_NOTA
-ST_FATO
-Extração dos dados do OLTP
+- ST_CLIENTE 
+- ST_PRODUTO 
+- ST_CATEGORIA 
+- ST_VENDEDOR 
+- ST_FORNECEDOR 
+- ST_NOTA 
+- ST_FATO 
 
-Os dados foram extraídos do banco operacional utilizando:
-SQL Server Integration Services
+Os dados foram extraídos do banco operacional utilizando: SQL Server Integration Services
 
-Transformações realizadas
-Limpeza de dados
+Transformações realizadas:
 
-Exemplo:
-
-remoção de inconsistências
-ajuste de tipos
-Padronização
+- Limpeza de dados
 
 Exemplo:
 
-Camel Case
-formatação textual
-Tratamento de NULL
+remoção de inconsistências ajuste de tipos Padronização
+
+Exemplo:
+
+Camel Case formatação textual Tratamento de NULL
 
 Validação de dados incompletos.
 
@@ -104,106 +92,57 @@ Regras de negócio
 
 Aplicação de lógica antes da carga no DW.
 
-Conceitos utilizados
-ETL
+- Conceitos utilizados:  ETL(Extract, Transform, Load)
 
-(Extract, Transform, Load)
-
-rea de Staging
-
-Camada intermediária para:
-
-limpeza
-auditoria
-preparação de dados
-Data Quality
-
-Tratamento de qualidade dos dados
+Camada intermediária para: limpeza auditoria preparação de dados Data Quality
 
 _TRATAMENTO DE ERROS (BI_ERROR)-Regra implementada
+Clientes sem endereço: não seguem para o DW são enviados para tabela de erro.
 
-Clientes sem endereço:
+## FASE 3 — CONSTRUÇÃO DO DATA WAREHOUSE (DW) 
+## Objetivo da fase: 
 
-não seguem para o DW
-são enviados para tabela de erro
+- Construir o ambiente analítico da empresa.
+- Transformar os dados operacionais em dados estratégicos.
 
-FASE 3 — CONSTRUÇÃO DO DATA WAREHOUSE (DW)
-Objetivo da fase
-
-Construir o ambiente analítico da empresa.
-
-Transformar os dados operacionais em dados estratégicos.
-
-Modelagem dimensional
-
-Uso de:
-
-Star Schema (modelo estrela)
-Criação das dimensões
+Uso de: Star Schema (modelo estrela), Criação das dimensões
 
 Tabelas:
 
-DIM_CLIENTE
-DIM_PRODUTO
-DIM_FORNECEDOR
-DIM_VENDEDOR
-DIM_FORMA
-DIM_NOTA
-DIM_TEMPO
-Criação da tabela fato
+- DIM_CLIENTE 
+- DIM_PRODUTO 
+- DIM_FORNECEDOR 
+- DIM_VENDEDOR 
+- DIM_FORMA 
+- DIM_NOTA 
+- DIM_TEMPO 
+- Criação da tabela fato
 
-Tabela:
-
-FATO_VENDAS
-Estrutura da fato
+Estrutura da Tabela fato: FATO_VENDAS 
 
 Armazena:
 
-quantidade
-valor total
-lucro
-custo
-Uso de chaves surrogate
+quantidade, valor total, lucro, custo, Uso de chaves surrogate
 
 Campo:
 
-IDSK
-Criação da dimensão tempo
+IDSK Criação da dimensão tempo
 
 A dimensão tempo foi criada via T-SQL contendo:
 
-dia
-mês
-trimestre
-nome do mês
-estação do ano
-fim de semana
-Implementação de SCD
+dia, mês, trimestre, nome do mês, estação do ano, fim de semana, Implementação de SCD
 
 Campos:
 
-INICIO
-FIM
+INICIO, FIM
 
-Uso de:
-
-Slowly Changing Dimension (Tipo 2)
-Conceitos utilizados
-Data Warehouse
+Uso de: Slowly Changing Dimension (Tipo 2) Conceitos utilizados Data Warehouse
 
 Banco analítico voltado para:
-
-consultas
-análise
-indicadores
-Star Schema
+- consultas, análise, indicadores
 
 Modelo:
-
-Fato no centro
-+
-Dimensões ao redor
-Tabela fato
+Fato no centro + Dimensões ao redor Tabela fato
 
 Armazena métricas numéricas.
 
@@ -223,17 +162,9 @@ _CARGA INCREMENTAL
 
 Procedure de carga incremental
 
-Procedure:
+- CARGA_FATO 
 
-CARGA_FATO
-Lógica utilizada
-
-A procedure:
-
-identifica última data carregada
-carrega apenas novos registros
-Conceitos utilizados
-Incremental Load
+A procedure: identifica última data carregada, carrega apenas novos registros
 
 Carga incremental.
 
@@ -242,3 +173,11 @@ Watermark
 Controle temporal da carga.
 
 Separação lógica dos dados.
+
+# Observação final
+
+Projeto desenvolvido com objetivo acadêmico e prático, simulando uma arquitetura corporativa completa de Business Intelligence aplicada a um cenário de e-commerce.
+
+ ## Autora: Jeniffer Santos
+ ## Estudante de Sistemas de Informação 
+ ## Foco em Dados, BI e Engenharia de Dados
