@@ -1,1 +1,193 @@
+INSERT INTO ENDERECO (RUA, CIDADE, ESTADO, REGIAO, ID_CLIENTE) VALUES
+('Rua das Flores, 120', 'São Paulo', 'SP', 'Sudeste', 1),
+('Av. Brasil, 450', 'Rio de Janeiro', 'RJ', 'Sudeste', 2),
+('Rua das Acácias, 78', 'Belo Horizonte', 'MG', 'Sudeste', 3),
+('Rua Central, 999', 'Curitiba', 'PR', 'Sul', 4),
+('Av. Beira Mar, 210', 'Fortaleza', 'CE', 'Nordeste', 5);
+GO
+USE COMERCIO_OLTP;
+INSERT INTO CLIENTE (NOME, SOBRENOME, EMAIL, SEXO, NASCIMENTO) VALUES
+('Ana', 'Silva', 'ana.silva@email.com', 'F', '1995-03-12'),
+('Carlos', 'Oliveira', 'carlos.oliveira@email.com', 'M', '1988-07-25'),
+('Mariana', 'Souza', 'mariana.souza@email.com', 'F', '2000-01-18'),
+('João', 'Pereira', 'joao.pereira@email.com', 'M', '1992-11-03'),
+('Fernanda', 'Costa', 'fernanda.costa@email.com', 'F', '1997-06-09'),
+('Lucas', 'Rodrigues', 'lucas.rodrigues@email.com', 'M', '1985-09-30'),
+('Patricia', 'Almeida', 'patricia.almeida@email.com', 'F', '1990-04-21'),
+('Rafael', 'Gomes', 'rafael.gomes@email.com', 'M', '1999-12-14'),
+('Juliana', 'Martins', 'juliana.martins@email.com', 'F', '1993-08-05'),
+('Bruno', 'Araujo', 'bruno.araujo@email.com', 'M', '1987-02-27');
+GO
+
+GO
+INSERT INTO VENDEDOR (NOME, SEXO, EMAIL,ID_GERENTE) VALUES
+('Paulo Santos', 'M', 'paulo.santos@empresa.com',6),
+('Juliana Rocha', 'F', 'juliana.rocha@empresa.com',null),
+('Marcos Lima', 'M', 'marcos.lima@empresa.com',2),
+('Camila Azevedo', 'F', 'camila.azevedo@empresa.com',2),
+('deyvid','M','deyvid30@empresa.com',6),
+('beatriz maria', 'F', 'beatrizmariadelima@empresa.com',null);
+GO
+
+
+INSERT INTO CATEGORIA (NOME) VALUES
+('Eletrônicos'),
+('Informática'),
+('Eletrodomésticos'),
+('Casa e Decoração'),
+('Perfumaria');
+GO
+
+INSERT INTO FORNECEDOR (NOME) VALUES
+('Samsung'),
+('LG'),
+('Apple'),
+('Dell'),
+('Philips');
+GO
+
+INSERT INTO PRODUTO (PRODUTO, VALOR, CUSTO_MEDIO, ID_CATEGORIA, ID_FORNECEDOR) VALUES
+('Smartphone Galaxy S23', 3899.90, 3100.00, 1, 1),
+('Notebook Dell Inspiron', 4599.00, 3900.00, 2, 4),
+('iPhone 14', 5299.00, 4600.00, 1, 3),
+('Smart TV 55 polegadas', 2999.00, 2400.00, 1, 2),
+('Liquidificador Philips', 399.90, 280.00, 3, 5);
+GO
+
+INSERT INTO ENDERECO (RUA, CIDADE, ESTADO, REGIAO, ID_CLIENTE) VALUES
+('Rua dos Pinheiros, 321', 'Campinas', 'SP', 'Sudeste', 6),
+('Av. das Nações, 850', 'Brasília', 'DF', 'Centro-Oeste', 7),
+('Rua Marechal Deodoro, 145', 'Porto Alegre', 'RS', 'Sul', 8),
+('Av. Amazonas, 2100', 'Manaus', 'AM', 'Norte', 9),
+('Rua Sete de Setembro, 500', 'Florianópolis', 'SC', 'Sul', 10);
+GO
+USE COMERCIO_OLTP
+INSERT INTO ENDERECO (RUA, CIDADE, ESTADO, REGIAO, ID_CLIENTE) VALUES
+('NOVO BESSA, 3231', 'JOÃO PESSOA', 'PB', 'NORDESTE', 11),
+('Av. SÃO JOSÉ, 850', 'CAMPINA GRANDE', 'PB', 'NORDESTE', 12),
+('Rua Marechal FONSECA, 1695', 'RECIFE', 'PE', 'NORDESTE', 13);
+GO
+
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Dinheiro');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('PAG SEGURO, Cartão de Crédito');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('CAIXA, Cartão de Débito');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Pix');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Boleto Bancário');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Transferência Bancária');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Cheque');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Crediário');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Vale Alimentação');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Vale Refeição');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('BRADESCO, Cartão Pré-pago');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Pagamento por Link');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Carteira Digital');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('NUBANK, cartão de Débito');
+INSERT INTO FORMA_PAGAMENTO (FORMA) VALUES ('Pix');
+GO
+
+UPDATE FORMA_PAGAMENTO
+SET FORMA = 'Pagamento por Link'
+WHERE FORMA = 'Vale Alimentação';
+
+UPDATE FORMA_PAGAMENTO
+SET FORMA = 'Pagamento por Link'
+WHERE FORMA = 'Vale Refeição';
+GO
+
+DECLARE 
+    @ID_CLIENTE INT,
+    @ID_VENDEDOR INT,
+    @ID_FORMA INT,
+    @DATA DATE,
+    @TOTAL NUMERIC(10,2),
+    @CONTADOR INT = 1;
+
+WHILE @CONTADOR <= 1000
+BEGIN
+    SET @ID_CLIENTE = (
+        SELECT TOP 1 IDCLIENTE 
+        FROM CLIENTE 
+        ORDER BY NEWID()
+    );
+
+    SET @ID_VENDEDOR = (
+        SELECT TOP 1 IDVENDEDOR 
+        FROM VENDEDOR 
+        ORDER BY NEWID()
+    );
+
+    SET @ID_FORMA = (
+        SELECT TOP 1 IDFORMA 
+        FROM FORMA_PAGAMENTO 
+        ORDER BY NEWID()
+    );
+
+    SET @DATA = DATEADD(
+        DAY, ABS(CHECKSUM(NEWID())) % 365,
+        '2016-01-01'
+    );
+
+    SET @TOTAL = ROUND(RAND() * 1000 + 50, 2);
+
+    INSERT INTO NOTA_FISCAL (DATA, TOTAL, ID_FORMA, ID_CLIENTE, ID_VENDEDOR)
+    VALUES (@DATA, @TOTAL, @ID_FORMA, @ID_CLIENTE, @ID_VENDEDOR);
+
+    SET @CONTADOR = @CONTADOR + 1;
+END;
+GO 1799
+
+USE COMERCIO_OLTP;
+DECLARE 
+    @ID_PRODUTO INT,
+    @ID_NOTA_FISCAL INT,
+    @QUANTIDADE INT,
+    @VALOR_PRODUTO NUMERIC(10,2),
+    @TOTAL NUMERIC(10,2),
+    @CONTADOR INT = 1;
+
+WHILE @CONTADOR <= 2000
+BEGIN
+    -- Produto aleatório
+    SET @ID_PRODUTO = (
+        SELECT TOP 1 IDPRODUTO 
+        FROM PRODUTO 
+        ORDER BY NEWID()
+    );
+
+    -- Nota fiscal aleatória
+    SET @ID_NOTA_FISCAL = (
+        SELECT TOP 1 IDNOTA 
+        FROM NOTA_FISCAL 
+        ORDER BY NEWID()
+    );
+
+    -- Quantidade entre 1 e 10
+    SET @QUANTIDADE = (ABS(CHECKSUM(NEWID())) % 10) + 1;
+
+    -- Valor do produto
+    SET @VALOR_PRODUTO = (
+        SELECT VALOR 
+        FROM PRODUTO 
+        WHERE IDPRODUTO = @ID_PRODUTO
+    );
+
+    -- Total do item
+    SET @TOTAL = @VALOR_PRODUTO * @QUANTIDADE;
+
+    INSERT INTO ITEM_NOTA (
+        ID_PRODUTO,
+        ID_NOTA_FISCAL,
+        QUANTIDADE,
+        TOTAL
+    )
+    VALUES (
+        @ID_PRODUTO,
+        @ID_NOTA_FISCAL,
+        @QUANTIDADE,
+        @TOTAL
+    );
+
+    SET @CONTADOR = @CONTADOR + 1;
+END;
+GO 2600
 
