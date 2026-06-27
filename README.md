@@ -75,6 +75,9 @@ A solução foi estruturada em quatro fases principais:
 ## 🔄 Fase 4 — Relatório Executivo (2015–2016)
 Dashboard desenvolvido no **Power BI**, consolidando indicadores estratégicos e análises comerciais.
 
+<img width="1247" height="696" alt="image" src="https://github.com/user-attachments/assets/fa957757-ecfa-4e84-97a1-3e292825519d" />
+
+
 ### Indicadores Gerais
 | Indicador | Valor |
 |------------|--------|
@@ -117,7 +120,3 @@ Dashboard desenvolvido no **Power BI**, consolidando indicadores estratégicos e
 **Jeniffer Santos**  
 Estudante de Sistemas de Informação  
 Foco em Dados, BI e Engenharia de Dados  
-
----
-
-Esse formato em **fases** deixa o README mais didático e mostra claramente a evolução do projeto. Se quiser, posso complementar com um **diagrama visual da arquitetura** para reforçar ainda mais a apresentação.
